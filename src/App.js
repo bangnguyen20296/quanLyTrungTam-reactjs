@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';    
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // components
 import DanhSachKhoaHoc from './components/DanhSachKhoaHoc';
@@ -10,23 +11,35 @@ import DangKy from './components/DangKy';
 import Header from './components/Header';
 import ThongTinNguoiDung from './components/ThongTinNguoiDung';
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={DangNhap} />
-          <Route path="/dang-nhap" exact render={({history}) => <DangNhap history={history}/>} />
-          <Route path="/dang-ky" exact component={DangKy} />
-          <Route path="/dskh" exact component={DanhSachKhoaHoc} />
-          <Route path="/nguoi-dung" exact component={ThongTinNguoiDung} />
+class App extends Component {
+  render() {
+    const { nguoiDung, daDangNhap } = this.props.nguoiDung
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Header />
+          <Switch>
+            {/* Public */}
+            <Route path="/" exact component={DangNhap} />
+            <Route path="/dang-nhap" exact render={({ history }) => <DangNhap history={history} />} />
+            <Route path="/dang-ky" exact component={DangKy} />
 
-          <Route path="/" component={NotFound} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+            {/* Private */}
+            <Route path="/dskh" exact component={daDangNhap ? DanhSachKhoaHoc : NotFound} />
+            <Route path="/nguoi-dung" exact component={daDangNhap ? ThongTinNguoiDung : NotFound} />
+
+            <Route path="/" component={NotFound} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    nguoiDung: state.nguoiDung
+  }
+}
+
+export default connect(mapStateToProps)(App);

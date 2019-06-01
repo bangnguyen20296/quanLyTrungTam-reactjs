@@ -12,13 +12,14 @@ export const dangNhap = (data, history) => {
             })
             .then(res => {
                 if (typeof res.data === 'string') {
-                    // console.log(res.date)
+                    // console.log(res.data)
                     return Promise.reject(res.data)
                 } else {
                     dispatch({
                         type: "DANG_NHAP",
                         nguoiDung: res.data[0]
                     })
+                    localStorage.setItem('nguoiDung', JSON.stringify(res.data[0]))
                     history.push("/dskh")
                 }
             })

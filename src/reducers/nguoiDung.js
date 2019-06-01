@@ -1,6 +1,7 @@
+const nguoiDung = JSON.parse(localStorage.getItem('nguoiDung'))
 const initialState = {
-    nguoiDung: {},
-    daDangNhap: false
+    nguoiDung: nguoiDung ? nguoiDung : {},
+    daDangNhap: nguoiDung ? true : false
 }
 
 const nguoiDungReducer = (state = initialState, action) => {
