@@ -3,6 +3,7 @@ import { Container, Form, Label, Input, Button, FormGroup, Alert } from 'reactst
 import axios from 'axios';
 import { dangNhap } from '../actions/nguoiDung';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class DangNhap extends Component {
     constructor(props) {
@@ -29,6 +30,13 @@ class DangNhap extends Component {
         console.log(this.state)
 
         this.props.dangNhap(this.state, this.props.history)
+    }
+
+    componentDidMount() {
+        const { daDangNhap } = this.props.nguoiDung
+        if (daDangNhap) {
+            this.props.history.push("/dskh")
+        }
     }
 
     render() {
@@ -79,8 +87,9 @@ class DangNhap extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        errors: state.errors
+        errors: state.errors,
+        nguoiDung: state.nguoiDung
     }
 }
 
-export default connect(mapStateToProps, { dangNhap }) (DangNhap); 
+export default withRouter(connect(mapStateToProps, { dangNhap })(DangNhap)); 

@@ -52,6 +52,7 @@ export const dangXuat = () => {
             type: "DANG_XUAT",
             nguoiDung: {}
         })
+        localStorage.removeItem('nguoiDung')
         dispatch(resetErrors())
     }
 }

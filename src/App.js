@@ -10,6 +10,7 @@ import NotFound from './components/NotFound'
 import DangKy from './components/DangKy';
 import Header from './components/Header';
 import ThongTinNguoiDung from './components/ThongTinNguoiDung';
+import DanhSachNguoiDung from './components/DanhSachNguoiDung';
 
 class App extends Component {
   render() {
@@ -27,6 +28,8 @@ class App extends Component {
             {/* Private */}
             <Route path="/dskh" exact component={daDangNhap ? DanhSachKhoaHoc : NotFound} />
             <Route path="/nguoi-dung" exact component={daDangNhap ? ThongTinNguoiDung : NotFound} />
+
+            <Route path="/dsnd" exact component={daDangNhap && nguoiDung.MaLoaiNguoiDung === 'GV' ? DanhSachNguoiDung : NotFound} />
 
             <Route path="/" component={NotFound} />
           </Switch>
